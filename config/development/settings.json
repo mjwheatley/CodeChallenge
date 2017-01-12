@@ -1,0 +1,17 @@
+{
+  "public": {
+    "appName": "Code Challenge"
+  },
+  "private": {
+    "environment": "DEVELOPMENT",
+    "google": {
+      "clientId": "",
+      "secret": ""
+    },
+    "facebook": {
+      "appId": "",
+      "secret": ""
+    }
+  },
+  "sample": "config/development/settings.json"
+}
