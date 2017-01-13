@@ -6,10 +6,21 @@
         <ion-title>
             {{"page-home.title" | translate}}
         </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only
+                    (click)="addDutyHour()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-
-
+    <ion-card>
+        <ion-card-content>
+            <div class="fullcalendar-container">
+                <angular2-fullcalendar #fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
+            </div>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

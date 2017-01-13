@@ -24,6 +24,13 @@ import {ChangePasswordPage} from "./pages/account/account-menu/change-password/c
 import {EditProfilePage} from "./pages/account/account-menu/edit-profile/edit-profile";
 import {AddImageComponent} from "./components/add-image/add-image";
 
+// other imports
+import {CalendarComponent} from "angular2-fullcalendar/src/calendar/calendar";
+import {TimeEntryPage} from "./pages/time-entry/time-entry";
+import {ResidentAnalysisPage} from "./pages/resident-analysis/resident-analysis";
+import {AnalysisReportComponent} from "./components/analysis-report/analysis-report";
+import {AdminAnalysisPage} from "./pages/admin-analysis/admin-analysis";
+
 
 @NgModule({
     // Components(Pages), Pipes, Directive
@@ -41,7 +48,12 @@ import {AddImageComponent} from "./components/add-image/add-image";
         AccountMenuPage,
         ChangePasswordPage,
         EditProfilePage,
-        AddImageComponent
+        AddImageComponent,
+        CalendarComponent,
+        TimeEntryPage,
+        ResidentAnalysisPage,
+        AnalysisReportComponent,
+        AdminAnalysisPage
     ],
     // Pages
     entryComponents: [
@@ -51,11 +63,13 @@ import {AddImageComponent} from "./components/add-image/add-image";
         AboutPage,
         AccountMenuPage,
         ChangePasswordPage,
-        EditProfilePage
+        EditProfilePage,
+        TimeEntryPage,
+        ResidentAnalysisPage,
+        AdminAnalysisPage
     ],
     // Providers
     providers: [
-        DemoDataService,
         {
             provide: ErrorHandler,
             useClass: IonicErrorHandler

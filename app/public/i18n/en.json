@@ -8,13 +8,15 @@
     "continue": "Continue",
     "accept": "Accept",
     "submit": "Submit",
-    "save": "Save"
+    "save": "Save",
+    "done": "Done",
+    "delete": "Delete"
   },
   "menu": {
     "logout": "Sign Out"
   },
   "page-home": {
-    "title": "Home"
+    "title": "Duty Hours"
   },
   "language-select": {
     "header": "Select Language",
@@ -113,6 +115,35 @@
       "tooBig": "TOO BIG!",
       "invalidFileType": "Invalid File Type",
       "notAnImage": "The selected file was not an image."
+    }
+  },
+  "page-time-entry": {
+    "title": "Time Entry",
+    "labels": {
+      "time": "Time",
+      "date": "Date",
+      "start": "Start",
+      "end": "End"
+    },
+    "success": "Saved",
+    "removed": "Removed"
+  },
+  "page-resident-analysis": {
+    "title": "Resident Analysis"
+  },
+  "page-admin-analysis": {
+    "title": "Admin Analysis"
+  },
+  "analysis-report": {
+    "labels": {
+      "startDate": "Start Date",
+      "violations": "Violations"
+    },
+    "violations": {
+      "exceed24hour": "Exceeded 24 hours of continuous duty.",
+      "minimumBetweenShifts": "Less than 8 hours off between shifts.",
+      "dayOff": "Did not have a 24-hour day off each week.",
+      "overWorked": "Worked more than 80 hours per week."
     }
   }
 }

@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{"page-time-entry.title" | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button
+                    (click)="saveTimeEntry()">
+                {{"general.save" | translate}}
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card>
+        <h1 padding>{{"page-time-entry.labels.start" | translate}}</h1>
+        <ion-list>
+            <ion-item>
+                <ion-label class="gama label">
+                    {{"page-time-entry.labels.date" | translate}}
+                </ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MMMM DD YYYY"
+                              cancelText="{{'general.cancel' | translate}}"
+                              doneText="{{'general.done' | translate}}"
+                              [(ngModel)]="timeEntry.startDate" (ionChange)="startDateChanged()">
+                </ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label class="gama label">
+                    {{"page-time-entry.labels.time" | translate}}
+                </ion-label>
+                <ion-datetime displayFormat="hh:mm A" pickerFormat="hh mm A"
+                              cancelText="{{'general.cancel' | translate}}"
+                              doneText="{{'general.done' | translate}}"
+                              [(ngModel)]="timeEntry.startTime" (ionChange)="startTimeChanged()">
+                </ion-datetime>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+
+    <ion-card>
+        <h1 padding>{{"page-time-entry.labels.end" | translate}}</h1>
+        <ion-list>
+            <ion-item>
+                <ion-label class="gama label">
+                    {{"page-time-entry.labels.date" | translate}}
+                </ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MMMM DD YYYY"
+                              cancelText="{{'general.cancel' | translate}}"
+                              doneText="{{'general.done' | translate}}"
+                              [(ngModel)]="timeEntry.endDate" (ionChange)="endDateChanged()">
+                </ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label class="gama label">
+                    {{"page-time-entry.labels.time" | translate}}
+                </ion-label>
+                <ion-datetime displayFormat="hh:mm A" pickerFormat="hh mm A"
+                              cancelText="{{'general.cancel' | translate}}"
+                              doneText="{{'general.done' | translate}}"
+                              [(ngModel)]="timeEntry.endTime" (ionChange)="endTimeChanged()">
+                </ion-datetime>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+
+    <div padding *ngIf="dutyHour && dutyHour._id">
+        <button ion-button block color="danger" icon-left
+                (click)="deleteDutyHours()">
+            <ion-icon name="trash"></ion-icon>
+            {{"general.delete" | translate}}
+        </button>
+    </div>
+
+</ion-content>

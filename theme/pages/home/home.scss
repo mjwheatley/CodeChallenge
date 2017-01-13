@@ -1,0 +1,12 @@
+page-home {
+  .fullcalendar-container {
+    height: calc(100vh - 110px);
+
+    angular2-fullcalendar {
+      .fc-header-toolbar .fc-left h2 {
+        font-weight: bold;
+        font-size: 1.8rem;
+      }
+    }
+  }
+}

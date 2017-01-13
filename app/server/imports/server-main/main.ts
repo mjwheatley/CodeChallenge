@@ -1,4 +1,8 @@
 import {OauthServiceConfig} from "../../lib/oauthConfig";
+import {DutyHour} from "../../../both/models/dutyHour.model";
+import {DutyHourCollection} from "../../../both/collections/dutyHour.collection";
+import {MeteorMethods} from "./methods";
+import * as moment from 'moment';
 
 declare var process;
 
@@ -10,25 +14,13 @@ export class Main {
         var oauthProviderConfig = new OauthServiceConfig();
         oauthProviderConfig.initOauthServices();
 
+        var meteorMethods = new MeteorMethods();
+        meteorMethods.init();
     }
 
-    // initFakeData():void {
-    //     if (DemoCollection.find({}).cursor.count() === 0) {
-    //         const data:Demo[] = [{
-    //             name: "Dotan",
-    //             age: 25
-    //         }, {
-    //             name: "Liran",
-    //             age: 26
-    //         }, {
-    //             name: "Uri",
-    //             age: 30
-    //         }];
-    //         data.forEach((obj:Demo) => {
-    //             DemoCollection.insert(obj);
-    //         });
-    //     }
-    // }
+    initFakeData():void {
+        
+    }
 
     printSettings():void {
         console.log("process.env.ROOT_URL: " + process.env.ROOT_URL);

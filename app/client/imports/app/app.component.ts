@@ -8,8 +8,11 @@ import {TranslateService} from "ng2-translate";
 import {LoginPage} from "./pages/account/login/login";
 import {AboutPage} from "./pages/about/about";
 import {AccountMenuPage} from "./pages/account/account-menu/account-menu";
+import {TimeEntryPage} from "./pages/time-entry/time-entry";
+import {ResidentAnalysisPage} from "./pages/resident-analysis/resident-analysis";
 
 import template from './app.component.html';
+import {AdminAnalysisPage} from "./pages/admin-analysis/admin-analysis";
 @Component({
     selector: "ion-app",
     template
@@ -53,12 +56,23 @@ export class AppComponent extends MeteorComponent implements OnInit {
             title: 'page-home.title',
             component: HomePage,
             rootPage: true
+        }, {
+            icon: "time",
+            title: "page-time-entry.title",
+            component: TimeEntryPage,
+        }, {
+            icon: "stats",
+            title: "page-resident-analysis.title",
+            component: ResidentAnalysisPage,
+        }, {
+            icon: "analytics",
+            title: "page-admin-analysis.title",
+            component: AdminAnalysisPage,
         }];
         this.pages = [{
             icon: "information-circle",
             title: "page-about.title",
-            component: AboutPage,
-            rootPage: false
+            component: AboutPage
         }];
 
         this.autorun(() => this.zone.run(() => {

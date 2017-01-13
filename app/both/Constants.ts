@@ -16,7 +16,8 @@ export class Constants {
         RESET_PASSWORD_ERROR_MESSAGE: "resetPasswordErrorMessage",
         RESET_PASSWORD_TOKEN: "resetPasswordToken",
         WAS_PASSWORD_RESET: "wasPasswordReset",
-        EMAIL: "email"
+        EMAIL: "email",
+        CALENDAR_START_DATE: "calendarStartDate"
     };
 
     public static DEVICE:any = {

@@ -5,7 +5,7 @@
         </ion-toolbar>
         <ion-toolbar color="primary" *ngIf="user">
             <ion-list no-lines class="list-user">
-                <button ion-item detail-none
+                <button ion-item detail-none text-wrap
                         class="item-primary"
                         *ngIf="user"
                         (click)="showAccountMenu()">
@@ -18,7 +18,7 @@
                         </button>
                     </ion-avatar>
                     <h2>{{user.profile.name.display}}</h2>
-                    <p class="user-item-email">{{user.emails['0'].address}}</p>
+                    <p class="user-item-email" *ngIf="user.emails">{{user.emails['0'].address}}</p>
                     <ion-icon name="md-more" item-right></ion-icon>
                 </button>
             </ion-list>

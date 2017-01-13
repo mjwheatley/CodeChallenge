@@ -1,0 +1,45 @@
+<ion-card>
+    <ion-list>
+        <ion-item>
+            <ion-label class="gama label">
+                {{"analysis-report.labels.startDate" | translate}}
+            </ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MMMM DD YYYY"
+                          cancelText="{{'general.cancel' | translate}}"
+                          doneText="{{'general.done' | translate}}"
+                          [(ngModel)]="analysisStartDate"
+                          (ion-change)="onAnalysisStartDateChanged()">
+            </ion-datetime>
+        </ion-item>
+    </ion-list>
+</ion-card>
+
+<ion-card *ngFor="let user of users; let i = index;">
+    <ion-item detail-none text-wrap>
+        <ion-avatar item-left>
+            <img src="{{user.profile.picture}}" *ngIf="user.profile.picture">
+            <button ion-button icon-only round clear color="light"
+                    class="disable-hover no-user-image-icon"
+                    *ngIf="!user.profile.picture">
+                <ion-icon name="contact" *ngIf="!user.profile.picture"></ion-icon>
+            </button>
+        </ion-avatar>
+        <h2>{{user.profile.name.display}}</h2>
+        <p *ngIf="user.emails">{{user.emails['0'].address}}</p>
+    </ion-item>
+    <ion-list *ngIf="violations[i].isOver24Hours && violations[i].isOver24Hours.length > 0">
+        <ion-list-header text-wrap>
+            {{"analysis-report.violations.exceed24hour" | translate}}
+            <ion-note item-right>
+                {{violations[i].isOver24Hours.length}}
+            </ion-note>
+        </ion-list-header>
+        <div *ngFor="let isOver24HoursViolation of violations[i].isOver24Hours">
+            <button ion-item text-wrap
+                    (click)="showOnCalendar(isOver24HoursViolation.start)">
+                <p>{{"page-time-entry.labels.start" | translate}}: {{isOver24HoursViolation.startString}}</p>
+                <p>{{"page-time-entry.labels.end" | translate}}: {{isOver24HoursViolation.endString}}</p>
+            </button>
+        </div>
+    </ion-list>
+</ion-card>

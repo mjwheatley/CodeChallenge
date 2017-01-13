@@ -8,13 +8,15 @@
     "continue": "Continuar",
     "accept": "Aceptar",
     "submit": "Enviar",
-    "save": "Salvar"
+    "save": "Salvar",
+    "done": "Hecho",
+    "delete": "Borrar"
   },
   "menu": {
     "logout": "Desconectar"
   },
   "page-home": {
-    "title": "Casa"
+    "title": "Horario de Servicio"
   },
   "language-select": {
     "header": "Seleccione el idioma",
@@ -114,5 +116,16 @@
       "invalidFileType": "Tipo de Archivo Inválido",
       "notAnImage": "El archivo seleccionado no era una imagen."
     }
+  },
+  "page-time-entry": {
+    "title": "Entrada de Tiempo",
+    "labels": {
+      "time": "Hora",
+      "date": "Fecha",
+      "start": "Comienzo",
+      "end": "Fin"
+    },
+    "success": "Salvado",
+    "removed": "Remoto"
   }
 }
