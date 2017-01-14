@@ -137,7 +137,8 @@
   "analysis-report": {
     "labels": {
       "startDate": "Start Date",
-      "violations": "Violations"
+      "violations": "Violations",
+      "noViolations": "No Violations"
     },
     "violations": {
       "exceed24hour": "Exceeded 24 hours of continuous duty.",

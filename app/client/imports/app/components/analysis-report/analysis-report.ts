@@ -18,7 +18,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
     public isLoading:boolean = true;
     public analysisReport:Array<DutyHour>;
     public users:Array<Meteor.User> = [];
-    public violations:Array<IUserViolations>;
+    public violations:Array<IUserViolations> = [];
 
     constructor(public nav:NavController,
                 public zone:NgZone,
@@ -29,7 +29,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
     ngOnInit():void {
         var self = this;
         self.autorun(() => {
-            Session.set(Constants.SESSION.LOADING, true);
+            //Session.set(Constants.SESSION.LOADING, true);
             self.subscribe('DutyHourCollection', () => {
                 self.autorun(() => self.zone.run(() => {
                     Session.set(Constants.SESSION.LOADING, false);
@@ -40,6 +40,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
             });
             self.subscribe('userData', self.userIds.get(), () => {
                 self.autorun(() => self.zone.run(() => {
+                    self.users = [];
                     self.userIds.get().forEach(userId => {
                         var user:Meteor.User =  Meteor.users.findOne({_id: userId});
                         self.users.push(user);
@@ -55,6 +56,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
         var self = this;
 
         var dutyHoursByUser:Array<Array<DutyHour>> = self.getDutyHoursByUser();
+        console.log("dutyHoursByUser: ", dutyHoursByUser);
 
         self.filterForViolations(dutyHoursByUser)
 
@@ -89,7 +91,6 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
             isOver24Hours: []
         };
         data.forEach((dutyHour:DutyHour) => {
-            console.log("dutyHour: ", dutyHour);
             var isOver24Hours:boolean = self.isOver24Hours(dutyHour);
             if (isOver24Hours) {
                 var startString:string = moment(dutyHour.start).format("ddd, MM/DD/YY, h:mm a");

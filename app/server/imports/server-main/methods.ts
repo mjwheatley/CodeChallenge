@@ -16,7 +16,7 @@ export class MeteorMethods {
                 var self = this;
                 var user:Meteor.User = self.checkForUser();  // throws errors
                 if (user) {
-                    if (DutyHourCollection.find({}).fetch().length === 0) {
+                    if (DutyHourCollection.find({userId: user._id}).fetch().length === 0) {
                         const data:DutyHour[] = [
                                 new DutyHour({
                                     userId: user._id,

@@ -8,3 +8,12 @@ Meteor.publish('userData', function (userIds:Array<string>) {
         }
     });
 });
+
+Meteor.publish('allUserData', function () {
+    return Meteor.users.find({}, {
+        fields: {
+            "profile": 1,
+            "emails": 1
+        }
+    });
+});
