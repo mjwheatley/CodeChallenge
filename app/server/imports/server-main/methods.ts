@@ -18,22 +18,117 @@ export class MeteorMethods {
                 if (user) {
                     if (DutyHourCollection.find({userId: user._id}).fetch().length === 0) {
                         const data:DutyHour[] = [
-                                new DutyHour({
-                                    userId: user._id,
-                                    start: '2017-01-12T06:30:33',
-                                    end: '2017-01-13T15:00:00'
-                                }),
-                                new DutyHour({
-                                    userId: user._id,
-                                    start: '2017-01-11T06:00:00',
-                                    end: '2017-01-12T06:30:00'
-                                }),
-                                new DutyHour({
-                                    userId: user._id,
-                                    start: '2017-01-10T15:00:00',
-                                    end: '2017-01-10T23:00:00'
-                                })
-                            ];
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-17T18:00',
+                                end: '2016-12-18T06:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-18T21:00',
+                                end: '2016-12-19T12:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-19T18:00',
+                                end: '2016-12-20T06:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-22T18:00',
+                                end: '2016-12-23T04:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-23T23:00',
+                                end: '2016-12-24T07:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-25T06:00',
+                                end: '2016-12-26T06:30'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-27T06:00',
+                                end: '2016-12-27T14:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-28T12:00',
+                                end: '2016-12-28T20:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-29T18:00',
+                                end: '2016-12-30T06:30'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-30T12:03',
+                                end: '2016-12-31T06:07'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2016-12-31T16:00',
+                                end: '2017-01-01T12:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-01T20:00',
+                                end: '2017-01-02T22:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-03T06:00',
+                                end: '2017-01-03T22:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-04T08:00',
+                                end: '2017-01-05T06:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-05T12:00',
+                                end: '2017-01-06T06:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-06T14:00',
+                                end: '2017-01-07T14:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-07T23:00',
+                                end: '2017-01-08T18:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-08T05:00',
+                                end: '2017-01-09T05:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-10T04:00',
+                                end: '2017-01-10T12:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-11T11:00',
+                                end: '2017-01-11T19:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-12T10:00',
+                                end: '2017-01-12T18:00'
+                            }),
+                            new DutyHour({
+                                userId: user._id,
+                                start: '2017-01-13T09:00',
+                                end: '2017-01-13T16:00'
+                            })
+                        ];
                         data.forEach((obj:DutyHour) => {
                             DutyHourCollection.insert(obj);
                         });

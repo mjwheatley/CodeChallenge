@@ -45,8 +45,8 @@ export class HomePage extends MeteorComponent implements OnInit {
         });
 
         // Use MeteorComponent autorun to respond to reactive session variables.
-        this.autorun(() => this.zone.run(() => {
-            this.user = Meteor.user();
+        self.autorun(() => self.zone.run(() => {
+            self.user = Meteor.user();
 
             // Wait for translations to be ready
             // in case component loads before the language is set
@@ -62,36 +62,53 @@ export class HomePage extends MeteorComponent implements OnInit {
             }
         }));
 
-        this.autorun(() => this.zone.run(() => {
+        self.autorun(() => self.zone.run(() => {
             console.log("Session calendar start date: ", Session.get(Constants.SESSION.CALENDAR_START_DATE));
-            // if (Session.get(Constants.SESSION.CALENDAR_START_DATE)) {
-            //     self.calendarStartDate = moment(Session.get(Constants.SESSION.CALENDAR_START_DATE))
-            //         .format("YYYY-MM-DD");
-            //     Session.set(Constants.SESSION.CALENDAR_START_DATE, null);
-            // }  else {
-            //     self.calendarStartDate = moment().format("YYYY-MM-DD");
-            // }
-            // console.log("calendarStartDate: ", self.calendarStartDate);
+            if (Session.get(Constants.SESSION.CALENDAR_START_DATE)) {
+                self.calendarStartDate = moment(Session.get(Constants.SESSION.CALENDAR_START_DATE))
+                    .format("YYYY-MM-DD");
+                Session.set(Constants.SESSION.CALENDAR_START_DATE, null);
+            }  else {
+                self.calendarStartDate = moment().format("YYYY-MM-DD");
+            }
+            console.log("calendarStartDate: ", self.calendarStartDate);
         }));
-
-
 
         self.autorun(() => self.zone.run(() => {
             Session.set(Constants.SESSION.LOADING, true);
             self.subscribe('MyDutyHours', () => {
-                // self.autorun(() => self.zone.run(() => {
+                self.autorun(() => self.zone.run(() => {
                     Session.set(Constants.SESSION.LOADING, false);
                     self.isLoading = false;
+                    console.log("<><><><><><> MyDutyHours sub callback <><><><><><>");
                     var dutyHours:Array<DutyHour> = DutyHourCollection.find({}).fetch();
+                    console.log("found dutyHours: ", dutyHours);
                     if (dutyHours && dutyHours.length > 0) {
                         self.dutyHours = dutyHours;
                     }
-                    console.log("dutyHours:", self.dutyHours);
+                    console.log("set dutyHour:", self.dutyHours);
 
                     self.setCalendarDutyHours();
-                // }), true);
+                }), true);
             });
         }));
+
+        self.initCalendarOptions();
+    }
+
+    private initCalendarOptions():void {
+        var self = this;
+        self.calendarOptions = {
+            height: 'parent',
+            fixedWeekCount: false,
+            defaultDate: self.calendarStartDate,
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            eventClick: (event) => {
+                self.nav.push(TimeEntryPage, event);
+                return false;
+            }
+        };
     }
 
     private setCalendarDutyHours():void {
@@ -101,20 +118,11 @@ export class HomePage extends MeteorComponent implements OnInit {
             dutyHours = self.dutyHours;
         }
         console.log("adding duty hours to calendar options: ", dutyHours);
-        self.calendarOptions = {
-            height: 'parent',
-            fixedWeekCount: false,
-            defaultDate: self.calendarStartDate,
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            event: dutyHours,
-            eventClick: (event) => {
-                self.nav.push(TimeEntryPage, event);
-                return false;
-            }
-        };
 
-        // $('angular2-fullcalendar').fullCalendar('render');
+        self.zone.run(() => {
+            $('angular2-fullcalendar').fullCalendar('addEventSource', dutyHours);
+            console.log("fullcalendar: ", self.fullcalendar);
+        });
     }
 
     public addDutyHour():void {
