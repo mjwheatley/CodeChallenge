@@ -30,6 +30,7 @@ import {TimeEntryPage} from "./pages/time-entry/time-entry";
 import {ResidentAnalysisPage} from "./pages/resident-analysis/resident-analysis";
 import {AnalysisReportComponent} from "./components/analysis-report/analysis-report";
 import {AdminAnalysisPage} from "./pages/admin-analysis/admin-analysis";
+import {SelectUsersModalPage} from "./pages/modals/select-user-modal/select-users-modal";
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {AdminAnalysisPage} from "./pages/admin-analysis/admin-analysis";
         TimeEntryPage,
         ResidentAnalysisPage,
         AnalysisReportComponent,
-        AdminAnalysisPage
+        AdminAnalysisPage,
+        SelectUsersModalPage
     ],
     // Pages
     entryComponents: [
@@ -66,7 +68,8 @@ import {AdminAnalysisPage} from "./pages/admin-analysis/admin-analysis";
         EditProfilePage,
         TimeEntryPage,
         ResidentAnalysisPage,
-        AdminAnalysisPage
+        AdminAnalysisPage,
+        SelectUsersModalPage
     ],
     // Providers
     providers: [

@@ -31,6 +31,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
 
     ngOnInit():void {
         var self = this;
+        console.log("userIds: ", self.userIds);
         self.autorun(() => {
             //Session.set(Constants.SESSION.LOADING, true);
             self.subscribe('DutyHourCollection', () => {
@@ -41,7 +42,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
                     self.generateAnalysisReport();
                 }), true);
             });
-            self.subscribe('userData', self.userIds.get(), () => {
+            self.subscribe('allUserData', () => {
                 self.autorun(() => self.zone.run(() => {
                     self.users = [];
                     self.userIds.get().forEach(userId => {

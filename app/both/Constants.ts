@@ -18,7 +18,8 @@ export class Constants {
         WAS_PASSWORD_RESET: "wasPasswordReset",
         EMAIL: "email",
         CALENDAR_START_DATE: "calendarStartDate",
-        ANALYSIS_START_DATE: "analysisStartDate"
+        ANALYSIS_START_DATE: "analysisStartDate",
+        SELECTED_USER_IDS: "selectedUserIds"
     };
 
     public static DEVICE:any = {

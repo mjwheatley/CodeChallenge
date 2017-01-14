@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>{{"page-select-users-modal.title" | translate}}</ion-title>
+        <ion-buttons start>
+            <button ion-button icon-only
+                    (click)="dismiss('cancel')">
+                <span showWhen="ios">{{"general.cancel" | translate}}</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="dismiss('done')">
+                <span showWhen="ios">{{"general.done" | translate}}</span>
+                <ion-icon name="done-all" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="!isLoading">
+        <ion-card>
+            <ion-item text-wrap>
+                <ion-checkbox color="primary"
+                              [(ngModel)]="selectAll"
+                              (click)="onSelectAllClicked()"></ion-checkbox>
+                <ion-label>{{"page-select-users-modal.labels.selectAll" | translate}}</ion-label>
+            </ion-item>
+        </ion-card>
+        <ion-card>
+            <ion-list>
+                <div *ngIf="users && users.length > 0">
+                    <div *ngFor="let user of users">
+                        <ion-item text-wrap>
+                            <ion-checkbox color="primary"
+                                          [(ngModel)]="user.selected"
+                                          (click)="onUserSelectedClicked(user)"></ion-checkbox>
+                            <ion-avatar item-left>
+                                <img src="{{user.profile.picture}}" *ngIf="user.profile.picture">
+                                <button ion-button icon-only round clear color="light"
+                                        class="disable-hover no-user-image-icon"
+                                        *ngIf="!user.profile.picture">
+                                    <ion-icon name="contact" *ngIf="!user.profile.picture"></ion-icon>
+                                </button>
+                            </ion-avatar>
+                            <ion-label>
+                                <h2>{{user.profile.name.display}}</h2>
+                                <p *ngIf="user.emails">{{user.emails['0'].address}}</p>
+                            </ion-label>
+                        </ion-item>
+                    </div>
+                </div>
+            </ion-list>
+        </ion-card>
+    </div>
+</ion-content>

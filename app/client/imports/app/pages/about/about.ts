@@ -4,7 +4,7 @@ import {MeteorComponent} from 'angular2-meteor';
 import {TranslateService} from 'ng2-translate';
 
 
-import template from './about.html'
+import template from './about.html';
 @Component({
     selector: 'page-about',
     template

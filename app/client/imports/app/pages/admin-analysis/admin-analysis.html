@@ -9,6 +9,24 @@
 
 <ion-content>
 
-    <analysis-report [userIds]="userIds"></analysis-report>
+    <ion-card>
+        <ion-list>
+            <button ion-item text-wrap
+                    (click)="selectUsers()">
+                <ion-icon item-left name="contacts" color="primary"></ion-icon>
+                {{"page-admin-analysis.labels.selectUsers" | translate}}
+                <ion-note item-right>
+                    <div *ngIf="rUserIds.get().length === totalUsers">
+                        {{"page-admin-analysis.labels.all" | translate}}
+                    </div>
+                    <div *ngIf="rUserIds.get().length < totalUsers">
+                        {{rUserIds.get().length}} / {{totalUsers}}
+                    </div>
+                </ion-note>
+            </button>
+        </ion-list>
+    </ion-card>
+
+    <analysis-report [userIds]="rUserIds"></analysis-report>
 
 </ion-content>

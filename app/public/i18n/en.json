@@ -132,7 +132,11 @@
     "title": "Resident Analysis"
   },
   "page-admin-analysis": {
-    "title": "Admin Analysis"
+    "title": "Admin Analysis",
+    "labels": {
+      "selectUsers": "Select Users",
+      "all": "All"
+    }
   },
   "analysis-report": {
     "labels": {
@@ -146,6 +150,12 @@
       "minimumBetweenShifts": "Less than 8 hours off between shifts.",
       "dayOff": "Did not have a 24-hour day off each week.",
       "overWorked": "Worked more than 80 hours per week."
+    }
+  },
+  "page-select-users-modal": {
+    "title": "Select Users",
+    "labels": {
+      "selectAll": "Select All"
     }
   }
 }
