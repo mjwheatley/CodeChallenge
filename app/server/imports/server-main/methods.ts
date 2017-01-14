@@ -105,8 +105,8 @@ export class MeteorMethods {
                             }),
                             new DutyHour({
                                 userId: user._id,
-                                start: '2017-01-08T05:00',
-                                end: '2017-01-09T05:00'
+                                start: '2017-01-09T05:00',
+                                end: '2017-01-09T17:00'
                             }),
                             new DutyHour({
                                 userId: user._id,
@@ -121,12 +121,12 @@ export class MeteorMethods {
                             new DutyHour({
                                 userId: user._id,
                                 start: '2017-01-12T10:00',
-                                end: '2017-01-12T18:00'
+                                end: '2017-01-12T23:00'
                             }),
                             new DutyHour({
                                 userId: user._id,
                                 start: '2017-01-13T09:00',
-                                end: '2017-01-13T16:00'
+                                end: '2017-01-13T23:00'
                             })
                         ];
                         data.forEach((obj:DutyHour) => {

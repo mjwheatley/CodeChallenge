@@ -240,7 +240,7 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
                 var shiftStartMoment = moment(dutyHour.start);
                 var previousShiftEndMoment = moment(previousDutyHour.end);
 
-                var hoursOff:number = previousShiftEndMoment.diff(shiftStartMoment, 'hours');
+                var hoursOff:number = shiftStartMoment.diff(previousShiftEndMoment, 'hours');
                 if (hoursOff < 8) {
                     dutyHoursLessThan8HoursAprt.push(dutyHour);
                 }
