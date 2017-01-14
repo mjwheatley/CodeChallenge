@@ -33,12 +33,20 @@
         <p *ngIf="user.emails">{{user.emails['0'].address}}</p>
     </ion-item>
     <ion-list *ngIf="violations.length === users.length && violations[i]">
+        <!--Violation: isLessThan4DaysOff-->
+        <div *ngIf="violations[i].isLessThan4DaysOff">
+            <ion-list-header text-wrap>
+                <h2>{{"analysis-report.violations.daysOff" | translate}}</h2>
+            </ion-list-header>
+        </div>
+
+        <!--Violation: isOver24Hours-->
         <div *ngIf="violations[i].isOver24Hours.length > 0">
             <ion-list-header text-wrap>
-                {{"analysis-report.violations.exceed24hour" | translate}}
-                <ion-note item-right>
+                <h2>{{"analysis-report.violations.exceed24hour" | translate}}</h2>
+                <ion-badge item-right color="primary">
                     {{violations[i].isOver24Hours.length}}
-                </ion-note>
+                </ion-badge>
             </ion-list-header>
             <div *ngFor="let isOver24HoursViolation of violations[i].isOver24Hours">
                 <button ion-item text-wrap
@@ -48,7 +56,46 @@
                 </button>
             </div>
         </div>
-        <div *ngIf="violations[i].isOver24Hours.length === 0">
+
+        <!--Violation: isLessThan8HoursBetweenShifts-->
+        <div *ngIf="violations[i].isLessThan8HoursBetweenShifts.length > 0">
+            <ion-list-header text-wrap>
+                <h2>{{"analysis-report.violations.minimumBetweenShifts" | translate}}</h2>
+                <ion-badge item-right color="primary">
+                    {{violations[i].isLessThan8HoursBetweenShifts.length}}
+                </ion-badge>
+            </ion-list-header>
+            <div *ngFor="let isLessThan8HoursBetweenShifts of violations[i].isLessThan8HoursBetweenShifts">
+                <button ion-item text-wrap
+                        (click)="showOnCalendar(isLessThan8HoursBetweenShifts.start)">
+                    <p>{{"page-time-entry.labels.start" | translate}}: {{isLessThan8HoursBetweenShifts.startString}}</p>
+                    <p>{{"page-time-entry.labels.end" | translate}}: {{isLessThan8HoursBetweenShifts.endString}}</p>
+                </button>
+            </div>
+        </div>
+
+        <!--Violation: isExceeded80HoursPerWeek-->
+        <div *ngIf="violations[i].isExceeded80HoursPerWeek.length > 0">
+            <ion-list-header text-wrap>
+                <h2>{{"analysis-report.violations.overWorked" | translate}}</h2>
+                <ion-badge item-right color="primary">
+                    {{violations[i].isExceeded80HoursPerWeek.length}}
+                </ion-badge>
+            </ion-list-header>
+            <div *ngFor="let isExceeded80HoursPerWeek of violations[i].isExceeded80HoursPerWeek">
+                <button ion-item text-wrap
+                        (click)="showOnCalendar(isExceeded80HoursPerWeek.start)">
+                    <p>{{"page-time-entry.labels.start" | translate}}: {{isExceeded80HoursPerWeek.startString}}</p>
+                    <p>{{"page-time-entry.labels.end" | translate}}: {{isExceeded80HoursPerWeek.endString}}</p>
+                </button>
+            </div>
+        </div>
+
+        <!--No Violations-->
+        <div *ngIf="violations[i].isOver24Hours.length === 0 &&
+                    violations[i].isExceeded80HoursPerWeek.length === 0 &&
+                    violations[i].isLessThan8HoursBetweenShifts.length === 0  &&
+                    !violations[i].isLessThan4DaysOff">
             <ion-item>
                 {{"analysis-report.labels.noViolations" | translate}}
             </ion-item>

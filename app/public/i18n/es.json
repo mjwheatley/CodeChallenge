@@ -127,5 +127,34 @@
     },
     "success": "Salvado",
     "removed": "Remoto"
+  },
+  "page-resident-analysis": {
+    "title": "Análisis de Residentes"
+  },
+  "page-admin-analysis": {
+    "title": "Análisis de Administración",
+    "labels": {
+      "all": "Todas"
+    }
+  },
+  "analysis-report": {
+    "labels": {
+      "startDate": "Fecha de Inicio",
+      "violations": "Violaciones",
+      "noViolations": "Sin Infracciones",
+      "analysisDateRange": "Intervalo de Fechas de Análisis"
+    },
+    "violations": {
+      "exceed24hour": "Ha superado las 24 horas de servicio continuo",
+      "minimumBetweenShifts": "Menos de 8 horas de descanso entre turnos",
+      "daysOff": "No media un día libre de 24 horas cada semana",
+      "overWorked": "Trabajó más de 80 horas por semana"
+    }
+  },
+  "page-select-users-modal": {
+    "title": "Seleccionar Usuarios",
+    "labels": {
+      "selectAll": "Seleccionar todo"
+    }
   }
 }

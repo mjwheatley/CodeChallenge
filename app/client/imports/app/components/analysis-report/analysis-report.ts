@@ -105,6 +105,10 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
                 userId: userId,
                 start: {$gte: self.analysisStartTime.toISOString()},
                 end: {$lte: self.analysisEndTime.toISOString()}
+            }, {
+                sort: {
+                    start: 1
+                }
             }).fetch();
             dutyHoursByUser.push(dutyHours);
         });
@@ -127,30 +131,145 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
     private getUserViolations(data:Array<DutyHour>):IUserViolations {
         var self = this;
         var userViolations:IUserViolations = {
-            isOver24Hours: []
+            isOver24Hours: [],
+            isExceeded80HoursPerWeek: [],
+            isLessThan8HoursBetweenShifts: []
         };
+        
+        // Violation: isOver24Hours
         data.forEach((dutyHour:DutyHour) => {
             var isOver24Hours:boolean = self.isOver24Hours(dutyHour);
             if (isOver24Hours) {
-                var startString:string = moment(dutyHour.start).format("ddd, MM/DD/YY, h:mm a");
-                var endString:string = moment(dutyHour.end).format("ddd, MM/DD/YY, h:mm a");
-                var displayInfo:any = dutyHour;
-                displayInfo.startString = startString;
-                displayInfo.endString = endString;
-                userViolations.isOver24Hours.push(displayInfo);
+                var formattedDutyHour:any = self.getFormattedDutyHour(dutyHour);
+                userViolations.isOver24Hours.push(formattedDutyHour);
             }
         });
+
+        // Violation: isExceeded80HoursPerWeek
+        var dutyHoursOver320Hours:Array<DutyHour> = self.getDutyHoursOver320Hours(data);
+        if (dutyHoursOver320Hours.length > 0) {
+            dutyHoursOver320Hours.forEach(dutyHour => {
+                var formattedDutyHour:any = self.getFormattedDutyHour(dutyHour);
+                userViolations.isExceeded80HoursPerWeek.push(formattedDutyHour);
+            });
+        }
+
+        // Violation: isLessThan8HoursBetweenShifts
+        var dutyHoursLessThan8HoursAprt:Array<DutyHour> = self.getDutyHoursLessThan8HoursApart(data);
+        if (dutyHoursLessThan8HoursAprt.length > 0) {
+            dutyHoursLessThan8HoursAprt.forEach(dutyHour => {
+                var formattedDutyHour:any = self.getFormattedDutyHour(dutyHour);
+                userViolations.isLessThan8HoursBetweenShifts.push(formattedDutyHour);
+            });
+        }
+        
+        // Violation: isLessThan4DaysOff
+        userViolations.isLessThan4DaysOff = self.isLessThan4DaysOff(data);
 
         return userViolations;
     }
 
-    private isOver24Hours(dutyHour:DutyHour):boolean {
+    private getFormattedDutyHour(dutyHour:DutyHour):any {
+        var startString:string = moment(dutyHour.start).format("ddd, MM/DD/YY, h:mm a");
+        var endString:string = moment(dutyHour.end).format("ddd, MM/DD/YY, h:mm a");
+        var displayInfo:any = dutyHour;
+        displayInfo.startString = startString;
+        displayInfo.endString = endString;
+        return displayInfo;
+    }
+    
+    private isLessThan4DaysOff(data:Array<DutyHour>):boolean {
         var self = this;
+        var violation:boolean = false;
+        var daysOff:number = 0;
+
+        // Time before first shift
+        var firstDutyHour:DutyHour = data[0];
+        var firstShiftStartMoment = moment(firstDutyHour.start);
+        var timeBeforeFirstShift:number = firstShiftStartMoment.diff(self.analysisStartTime);
+        if (timeBeforeFirstShift >= 24) {
+            let hours2days:number = Math.floor(timeBeforeFirstShift/24);
+            daysOff += hours2days;
+        }
+
+        // Time after last shift
+        var lastDutyHour:DutyHour = data[data.length - 1];
+        var lastShiftEndMoment = moment(lastDutyHour.end);
+        var timeAfterLastShift:number = self.analysisEndTime.diff(lastShiftEndMoment);
+        if (timeAfterLastShift >= 24) {
+            let hours2days:number = Math.floor(timeAfterLastShift/24);
+            daysOff += hours2days;
+        }
+
+        // Time between shifts
+        // Only if more than one shift exists
+        if (data.length > 1) {
+            // Skip the first shift
+            for (let i = 1; i < data.length; i++) {
+                let dutyHour:DutyHour = data[i];
+                let previousDutyHour:DutyHour = data[i - 1];
+
+                var shiftStartMoment = moment(dutyHour.start);
+                var previousShiftEndMoment = moment(previousDutyHour.end);
+
+                var hoursOff:number = previousShiftEndMoment.diff(shiftStartMoment, 'hours');
+                if (hoursOff >= 24) {
+                    let hours2days:number = Math.floor(hoursOff/24);
+                    daysOff += hours2days;
+                }
+            }
+        }
+        
+        if (daysOff < 4) {
+            violation = true;
+        }
+        
+        return violation;
+    }
+
+    private getDutyHoursLessThan8HoursApart(data:Array<DutyHour>):Array<DutyHour> {
+        var dutyHoursLessThan8HoursAprt:Array<DutyHour> = [];
+
+        // Only if more than one shift exists
+        if (data.length > 1) {
+            // Skip the first shift
+            for (let i = 1; i < data.length; i++) {
+                let dutyHour:DutyHour = data[i];
+                let previousDutyHour:DutyHour = data[i - 1];
+
+                var shiftStartMoment = moment(dutyHour.start);
+                var previousShiftEndMoment = moment(previousDutyHour.end);
+
+                var hoursOff:number = previousShiftEndMoment.diff(shiftStartMoment, 'hours');
+                if (hoursOff < 8) {
+                    dutyHoursLessThan8HoursAprt.push(dutyHour);
+                }
+            }
+        }
+
+        return dutyHoursLessThan8HoursAprt;
+    }
+
+    private getDutyHoursOver320Hours(data:Array<DutyHour>):Array<DutyHour> {
+        var hoursWorked:number = 0;
+        var dutyHoursOver320Hours:Array<DutyHour> = [];
+        data.forEach(dutyHour => {
+            var startMoment = moment(dutyHour.start);
+            var endMoment = moment(dutyHour.end);
+            hoursWorked += endMoment.diff(startMoment, 'hours');
+            if (hoursWorked > 320) {
+                dutyHoursOver320Hours.push(dutyHour);
+            }
+        });
+        return dutyHoursOver320Hours;
+    }
+
+    private isOver24Hours(dutyHour:DutyHour):boolean {
         var violation = false;
 
         var startMoment = moment(dutyHour.start);
         var endMoment = moment(dutyHour.end);
-        var minutesWorked = endMoment.diff(startMoment, 'minutes');
+        var minutesWorked:number = endMoment.diff(startMoment, 'minutes');
 
         if (minutesWorked > 1440) {
             violation = true;
@@ -170,5 +289,8 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
 }
 
 interface IUserViolations {
-    isOver24Hours?:Array<any>
+    isOver24Hours?:Array<any>,
+    isExceeded80HoursPerWeek?:Array<any>,
+    isLessThan8HoursBetweenShifts?:Array<any>,
+    isLessThan4DaysOff?:boolean
 }
