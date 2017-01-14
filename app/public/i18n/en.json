@@ -138,7 +138,8 @@
     "labels": {
       "startDate": "Start Date",
       "violations": "Violations",
-      "noViolations": "No Violations"
+      "noViolations": "No Violations",
+      "analysisDateRange": "Analysis Date Range"
     },
     "violations": {
       "exceed24hour": "Exceeded 24 hours of continuous duty.",

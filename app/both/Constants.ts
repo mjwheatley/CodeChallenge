@@ -17,7 +17,8 @@ export class Constants {
         RESET_PASSWORD_TOKEN: "resetPasswordToken",
         WAS_PASSWORD_RESET: "wasPasswordReset",
         EMAIL: "email",
-        CALENDAR_START_DATE: "calendarStartDate"
+        CALENDAR_START_DATE: "calendarStartDate",
+        ANALYSIS_START_DATE: "analysisStartDate"
     };
 
     public static DEVICE:any = {
@@ -39,5 +40,7 @@ export class Constants {
     };
 
     public static ADD_IMAGE_PLACEHOLDER_URI:string = "/images/add_image_camera_photo.png";
-    public static IMAGE_URI_PREFIX:string = "data:image/jpeg;base64,"
+    public static IMAGE_URI_PREFIX:string = "data:image/jpeg;base64,";
+
+    public static ANALYSIS_EVALUATION_DAYS:number = 28;
 }

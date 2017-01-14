@@ -7,7 +7,7 @@ import {DutyHourCollection} from "../../../../../both/collections/dutyHour.colle
 import {DutyHour, IDutyHour} from "../../../../../both/models/dutyHour.model";
 import * as moment from 'moment';
 
-import template from './analysis-report.html'
+import template from './analysis-report.html';
 @Component({
     selector: 'analysis-report',
     template
@@ -15,8 +15,11 @@ import template from './analysis-report.html'
 export class AnalysisReportComponent extends MeteorComponent implements OnInit {
     @Input() userIds:ReactiveVar<Array<string>>;
     public analysisStartDate:any;
+    private analysisStartTime:any;
+    private analysisEndTime:any;
+    public displayStartTime:any;
+    public displayEndTime:any;
     public isLoading:boolean = true;
-    public analysisReport:Array<DutyHour>;
     public users:Array<Meteor.User> = [];
     public violations:Array<IUserViolations> = [];
 
@@ -49,7 +52,38 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
             });
         });
 
-        self.analysisStartDate = moment().format("YYYY-MM-DD");
+
+        var today = moment().startOf('day');
+        self.analysisStartDate = today.clone().subtract(
+            Constants.ANALYSIS_EVALUATION_DAYS, 'days').startOf('day').format('YYYY-MM-DD');
+
+        if (Session.get(Constants.SESSION.ANALYSIS_START_DATE)) {
+            self.analysisStartDate = moment(Session.get(
+                Constants.SESSION.ANALYSIS_START_DATE)).startOf('day').format('YYYY-MM-DD');
+        }
+
+        self.setAnalysisStartTime(self.analysisStartDate);
+        self.generateAnalysisReport();
+    }
+
+    private setAnalysisStartTime(startDate:any):void {
+        var self = this;
+        // self.zone.run(() => {
+            self.analysisStartTime = moment(startDate).startOf('day');
+            self.analysisEndTime = self.analysisStartTime.clone()
+                .add(Constants.ANALYSIS_EVALUATION_DAYS, 'days').endOf('day');
+
+            self.displayStartTime = self.analysisStartTime.clone().format("ddd, MM/DD/YY, h:mm a");
+            self.displayEndTime = self.analysisEndTime.clone().format("ddd, MM/DD/YY, h:mm a");
+        // });
+    }
+
+    public onAnalysisStartDateChanged():void {
+        console.log("onAnalysisStartDateChanged");
+        var self = this;
+        Session.set(Constants.SESSION.ANALYSIS_START_DATE, self.analysisStartDate);
+        self.setAnalysisStartTime(self.analysisStartDate);
+        self.generateAnalysisReport();
     }
 
     private generateAnalysisReport():void {
@@ -66,7 +100,11 @@ export class AnalysisReportComponent extends MeteorComponent implements OnInit {
         var self = this;
         var dutyHoursByUser:Array<Array<DutyHour>> = [];
         self.userIds.get().forEach(userId => {
-            var dutyHours:Array<DutyHour> =  DutyHourCollection.find({userId: userId}).fetch();
+            var dutyHours:Array<DutyHour> =  DutyHourCollection.find({
+                userId: userId,
+                start: {$gte: self.analysisStartTime.toISOString()},
+                end: {$lte: self.analysisEndTime.toISOString()}
+            }).fetch();
             dutyHoursByUser.push(dutyHours);
         });
         return dutyHoursByUser;

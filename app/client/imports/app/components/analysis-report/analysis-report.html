@@ -8,8 +8,13 @@
                           cancelText="{{'general.cancel' | translate}}"
                           doneText="{{'general.done' | translate}}"
                           [(ngModel)]="analysisStartDate"
-                          (ion-change)="onAnalysisStartDateChanged()">
+                          (ionChange)="onAnalysisStartDateChanged()">
             </ion-datetime>
+        </ion-item>
+        <ion-item>
+            <p>{{"analysis-report.labels.analysisDateRange" | translate}}</p>
+            <p>{{"page-time-entry.labels.start" | translate}}: {{displayStartTime}}</p>
+            <p>{{"page-time-entry.labels.end" | translate}}: {{displayEndTime}}</p>
         </ion-item>
     </ion-list>
 </ion-card>
