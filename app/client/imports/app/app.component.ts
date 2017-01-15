@@ -153,7 +153,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
                 // StatusBar.overlaysWebView(false);
 
                 //* Complimentary hex value for primary color in theme/app.variables.scss *//
-                StatusBar.backgroundColorByHexString("#672B8A");
+                StatusBar.backgroundColorByHexString("#047927");
 
                 Splashscreen.hide();
             }
